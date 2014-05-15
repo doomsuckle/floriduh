@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Leaflet Layers Control Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--link rel="stylesheet" href="../dist/leaflet.css" /-->
+	<link rel="stylesheet" href="leaflet.css" >
+	<link rel="stylesheet" href="toggle.css" >
+
+</head>
+
+
+
+<body>
+<p>Gwarus Erectus.</p>
+
+	<div id="selman">
+
+	</div>
+
+
+<form action="#">
+<select name="aa" onchange="loadPoly(this.value)"> 
+<option value="">Please select</option>
+<option value="Badger">Badger</option>
+<option value="Apple">Apple</option>
+<option value="Badger">Volvo</option>
+<option value="Apple">Saab</option>
+</select>
+</form>
+
+
+	<div id="map" style="width: 600px; height: 400px"></div>
+	<script type="text/javascript" src="leaflet.js"></script>
+<!--	<script type="text/javascript" src="refData.js"></script> -->
+	<script type="text/javascript" src="refData2.js"></script>
+
+
+
+
+
+	<script>
+
+		function initmap() {
+
+			var map = new L.map('map').setView([28, -82], 6);
+
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+//			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+//				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+//				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-9ijuk24y'
+		}).addTo(map);
+			return map;
+		}
+
+		var map = initmap();
+//		var map = initmap();
+
+
+
+		function style(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				smoothFactor: 50
+//				blur: 40
+//				color: 'white',
+//				dashArray: '3',
+//				fillOpacity: 0.7,
+//				fillColor: getColor(feature.properties.density)
+			};
+		}
+
+		function getColor(d) {
+			return d > 100 ? '#800026' :
+			       d > 80  ? '#BD0026' :
+			       d > 50  ? '#E31A1C' :
+			       d > 20  ? '#FC4E2A' :
+			       d > 15   ? '#FD8D3C' :
+			       d > 10   ? '#FEB24C' :
+			       d > 5   ? '#FED976' :
+			                  '#FFEDA0';
+		}
+
+  var polyline_options = {
+      color: '#000'
+	
+  };
+
+
+  function polyline_options1(val) {
+	return {
+//      	color: getColor(val),
+		weight: 0,
+//		fillOpacity: 0.2
+		fillOpacity: 1
+	}
+  };
+
+
+	function createpoly(cent,res) {
+		return ( [
+		 [cent[0]+res,cent[1]-res],
+		 [cent[0]+res,cent[1]+res],
+		 [cent[0]-res,cent[1]+res],
+		 [cent[0]-res,cent[1]-res]
+		]);
+	};
+
+
+//	var markersList = [];
+
+
+	function loadPoly(sname) {
+	
+
+//		map.reset;
+//		map.reset()
+		var indata = refData[sname]; 
+		for (var i = 0; i < indata.length; i++) {	
+			
+			var poly = new 	L.polygon(
+				createpoly(indata[i]["latlon"],refData["res"])
+				,polyline_options1(indata[i]["dist"])
+				);
+
+			poly["options"]["color"] = getColor(indata[i]["dist"]); 
+//			poly["options"]["color"] = "#FFEDA0"; 
+//			markersList.push(poly);
+			map.addLayer(poly);
+		}
+		return map;	
+	}
+
+
+	function changePoly(sname) {
+
+		var indata = refData[sname]; 
+//		for (var i = 0; i < indata.length; i++) {	
+		for (var i = 27; i < indata.length; i++) {	
+			
+//			markersList[i]["options"].setStyle({color: "#FFEDA0"}); 
+			map._layers[i]["options"]["color"]= "#FFEDA0"; 
+			map._layers[i].redraw();
+/*
+			map._layers.pop();
+			continue;
+			markersList[i]["options"]["color"] = getColor(indata[i]["dist"]); 
+			map._layers[i].redraw();
+//			map.addLayer(poly);
+			map.removeLayer(markersList[i]);
+			map.addLayer(markersList[i]);
+//			map.redraw();
+*/
+		}
+	}
+
+//	var map = loadPoly("Badger");
+//	var map = loadPoly("Apple");
+
+//		window.map.removeLayer(window.polygon);
+</script>
+
+</body>
+
+</html>
+
