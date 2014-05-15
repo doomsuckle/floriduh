@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+-->
+	<link rel="stylesheet" href="dist/leaflet.css" /> 
+	<link rel="stylesheet" href="dist/toggle.css" > 
+	<script type="text/javascript" src="dist/leaflet.js"></script>
+	<script type="text/javascript" src="dist/tools.js"></script>
+	<script type="text/javascript" src="include/palette.js"></script>
+</head>
+<body>
+
+
+<div id="tog" ></div>
+
+
+<form action="#" id="rawr">
+<select name="aa" onchange="recolor(this.value)"> 
+<option value="">Please select</option>
+<option value="Addiction Medicine" selected="selected"> Addiction Medicine</option>
+<option value="All Other Suppliers">All Other Suppliers</option>
+<option value="Allergy/Immunology">Allergy/Immunology</option>
+<option value="Ambulance Service Supplier">Ambulance Service Supplier</option>
+<option value="Ambulatory Surgical Center">Ambulatory Surgical Center</option>
+<option value="Anesthesiologist Assistants">Anesthesiologist Assistants</option>
+<option value="Anesthesiology">Anesthesiology</option>
+<option value="Audiologist (billing independently)">Audiologist (billing independently)</option>
+<option value="CRNA">CRNA</option>
+<option value="Cardiac Electrophysiology">Cardiac Electrophysiology</option>
+<option value="Cardiac Surgery">Cardiac Surgery</option>
+<option value="Cardiology">Cardiology</option>
+<option value="Certified Clinical Nurse Specialist">Certified Clinical Nurse Specialist</option>
+<option value="Certified Nurse Midwife">Certified Nurse Midwife</option>
+<option value="Chiropractic">Chiropractic</option>
+<option value="Clinical Laboratory">Clinical Laboratory</option>
+<option value="Clinical Psychologist">Clinical Psychologist</option>
+<option value="Colorectal Surgery (formerly proctology)">Colorectal Surgery (formerly proctology)</option>
+<option value="Critical Care (Intensivists)">Critical Care (Intensivists)</option>
+<option value="Dermatology">Dermatology</option>
+<option value="Diagnostic Radiology">Diagnostic Radiology</option>
+<option value="Emergency Medicine">Emergency Medicine</option>
+<option value="Endocrinology">Endocrinology</option>
+<option value="Family Practice">Family Practice</option>
+<option value="Gastroenterology">Gastroenterology</option>
+<option value="General Practice">General Practice</option>
+<option value="General Surgery">General Surgery</option>
+<option value="Geriatric Medicine">Geriatric Medicine</option>
+<option value="Geriatric Psychiatry">Geriatric Psychiatry</option>
+<option value="Gynecological/Oncology">Gynecological/Oncology</option>
+<option value="Hand Surgery">Hand Surgery</option>
+<option value="Hematology">Hematology</option>
+<option value="Hematology/Oncology">Hematology/Oncology</option>
+<option value="Hospice and Palliative Care">Hospice and Palliative Care</option>
+<option value="Independent Diagnostic Testing Facility">Independent Diagnostic Testing Facility</option>
+<option value="Infectious Disease">Infectious Disease</option>
+<option value="Internal Medicine">Internal Medicine</option>
+<option value="Interventional Pain Management">Interventional Pain Management</option>
+<option value="Interventional Radiology">Interventional Radiology</option>
+<option value="Licensed Clinical Social Worker">Licensed Clinical Social Worker</option>
+<option value="Mammographic Screening Center">Mammographic Screening Center</option>
+<option value="Mass Immunization Roster Biller">Mass Immunization Roster Biller</option>
+<option value="Maxillofacial Surgery">Maxillofacial Surgery</option>
+<option value="Medical Oncology">Medical Oncology</option>
+<option value="Multispecialty Clinic/Group Practice">Multispecialty Clinic/Group Practice</option>
+<option value="Nephrology">Nephrology</option>
+<option value="Neurology">Neurology</option>
+<option value="Neuropsychiatry">Neuropsychiatry</option>
+<option value="Neurosurgery">Neurosurgery</option>
+<option value="Nuclear Medicine">Nuclear Medicine</option>
+<option value="Nurse Practitioner">Nurse Practitioner</option>
+<option value="Obstetrics/Gynecology">Obstetrics/Gynecology</option>
+<option value="Occupational therapist">Occupational therapist</option>
+<option value="Ophthalmology">Ophthalmology</option>
+<option value="Optometry">Optometry</option>
+<option value="Oral Surgery (dentists only)">Oral Surgery (dentists only)</option>
+<option value="Orthopedic Surgery">Orthopedic Surgery</option>
+<option value="Osteopathic Manipulative Medicine">Osteopathic Manipulative Medicine</option>
+<option value="Otolaryngology">Otolaryngology</option>
+<option value="Pain Management">Pain Management</option>
+<option value="Pathology">Pathology</option>
+<option value="Pediatric Medicine">Pediatric Medicine</option>
+<option value="Peripheral Vascular Disease">Peripheral Vascular Disease</option>
+<option value="Physical Medicine and Rehabilitation">Physical Medicine and Rehabilitation</option>
+<option value="Physical Therapist">Physical Therapist</option>
+<option value="Physician Assistant">Physician Assistant</option>
+<option value="Plastic and Reconstructive Surgery">Plastic and Reconstructive Surgery</option>
+<option value="Podiatry">Podiatry</option>
+<option value="Portable X-ray">Portable X-ray</option>
+<option value="Preventive Medicine">Preventive Medicine</option>
+<option value="Psychiatry">Psychiatry</option>
+<option value="Psychologist (billing independently)">Psychologist (billing independently)</option>
+<option value="Public Health Welfare Agency">Public Health Welfare Agency</option>
+<option value="Pulmonary Disease">Pulmonary Disease</option>
+<option value="Radiation Oncology">Radiation Oncology</option>
+<option value="Registered Dietician/Nutrition Professional">Registered Dietician/Nutrition Professional</option>
+<option value="Rheumatology">Rheumatology</option>
+<option value="Speech Language Pathologist">Speech Language Pathologist</option>
+<option value="Sports Medicine">Sports Medicine</option>
+<option value="Surgical Oncology">Surgical Oncology</option>
+<option value="Thoracic Surgery">Thoracic Surgery</option>
+<option value="Unknown Physician Specialty Code">Unknown Physician Specialty Code</option>
+<option value="Urology">Urology</option>
+<option value="Vascular Surgery">Vascular Surgery</option>
+</select>
+</form>
+
+<div id="map" style="width: 600px; height: 400px"></div>
+
+
+<!--	<script src="dist/leaflet.js"></script> -->
+	<script type="text/javascript" src="dat/refData1.js"></script>
+	<script>
+
+
+		
+
+	var map = L.map('map').setView([28, -82], 6);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+//			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			attribution: '' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i86knfo3'
+		}).addTo(map);
+
+
+	var polies = loadPoly("Addiction Medicine");	
+
+	polies.addTo(map);	
+
+
+	function recolor(val){
+
+		jc = 0;
+		
+		polies.getLayers().forEach(
+			function(x){
+				x.setStyle({color:getColor(refData[val][jc].dist)});
+				jc +=1;
+				return x;
+				
+			}
+		);
+		return 1;
+		
+	}
+//	map.addLayer(
+
+/*
+	var poly = new 	L.polygon(
+		createpoly([27.400000,-82.100000],1)
+		,polyline_options1(150)
+		);
+	poly.setStyle({color:getColor(50)})
+
+	var poly1 = new 	L.polygon(
+		createpoly([29.400000,-82.100000],1)
+		,polyline_options1(20)
+		);
+//		poly["options"]["color"] = getColor(indata[i]["dist"]); 
+	
+
+	var stuff1 = [150,20];
+	var stuff2 = [550,70];
+
+//	var cities = L.layerGroup([poly,poly1]);
+	var cities = L.layerGroup();
+	poly.addTo(cities);
+	poly1.addTo(cities);
+
+
+	map.addLayer(cities);
+//	map.addLayer(poly);
+//	map.addLayer(poly1);
+//	map.addLayer(poly1);
+	function restyle(v){
+		
+		cities.getLayers().forEach(
+			function(x){
+				x.setStyle({color:getColor(v)});
+				return x;
+			}
+		);
+		return cities;
+//		poly.setStyle({color:getColor(v)});
+//		return poly;
+	}
+
+	function recolor(val){
+
+		if (val == "Badger") ret = restyle(10);	
+		if (val == "Apple") ret = restyle(100);	
+		return ret;
+
+	}
+*/
+
+/*	
+	var overlayMaps = {
+    	"Cities": cities
+	};
+*/
+
+//	L.control.layers( overlayMaps,overlayMaps).addTo(map);
+
+//	map.addLayer(poly);
+//	map.addLayer(poly1);
+
+
+//	var map = loadPoly("Geriatric Medicine");
+//	var map = loadPoly("Addiction Medicine");
+
+/*
+		L.marker([51.5, -0.09]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+		L.circle([51.508, -0.11], 500, {
+			color: 'red',
+			fillColor: '#f03',
+			fillOpacity: 0.5
+		}).addTo(map).bindPopup("I am a circle.");
+
+		L.polygon([
+			[51.509, -0.08],
+			[51.503, -0.06],
+			[51.51, -0.047]
+		]).addTo(map).bindPopup("I am a polygon.");
+
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+*/
+	</script>
+</body>
+</html>
+
+
