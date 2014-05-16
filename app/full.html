@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+	
+
+	<html manifest="badger.appcache">
+
+
+  <meta charset="UTF-8">
+
+  <title>FloriDUH</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+  <link rel='stylesheet prefetch' href='http://bradfrost.github.com/this-is-responsive/styles.css'>
+-->
+  	<link rel='stylesheet prefetch' href='css/styles.css'>
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+
+    <script src="js/modernizr.js"></script>
+
+	<link rel="stylesheet" href="/dist/leaflet.css" /> 
+	<link rel="stylesheet" href="/dist/toggle.css" > 
+	<script type="text/javascript" src="/js/leaflet.js"></script>
+	<script type="text/javascript" src="/dist/tools.js"></script>
+	<script type="text/javascript" src="/include/palette.js"></script>
+	<script type="text/javascript" src="/dat/refData1.js"> </script>
+	<script type="text/javascript" src="/js/providerTypeOptions.js"> </script>
+
+</head>
+
+<body>
+
+  <h2>Team FloriDUH</h2>
+<dl class="accordion">
+  <dt class="accordion__title">Void Choropleth</dt>
+  <dd class="accordion__content">
+
+
+<!--				<select name="aa" id="applecommander" > 
+
+-->
+<table>
+  <tr>
+    <td>
+			<label> Choose a Provider Type:</label>
+
+    </td>
+    <td>
+			<form action="#" id="rawr">
+				<select name="aa" id="applecommander" onchange="recolor(this.value)"> 
+				</select>
+			</form>
+
+    </td>
+  </tr>
+</table>
+<script>
+
+	var selectBox = document.getElementById('applecommander');
+	var sidx = -1;
+
+	for(var i = 0, l = providerTypeOptions.length; i < l; i++){
+	  var option = providerTypeOptions[i];
+//		console.log(option=="Family Practice");
+		if (option=="Family Practice") { 
+//  selectBox.options.add( new Option(option, option,option=="Addiction Medicine") );
+		  	selectBox.options.add( new Option(option, option,true) );
+			if (sidx < 0) {
+				sidx = i;
+			}
+		} else {
+	  		selectBox.options.add( new Option(option, option) );
+		}
+		
+	}
+
+		selectBox.selectedIndex=parseInt(readCookie("savedListPosition1") || Math.max(0,sidx));
+/*
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+*/
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+	
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+
+//createCookie("quark",5,1);
+
+//document.cookie="quark=5";
+
+function setCookie(cname,cvalue,exdays)
+{
+var d = new Date();
+d.setTime(d.getTime()+(exdays*24*60*60*1000));
+var expires = "expires="+d.toGMTString();
+document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+//var quarky = 7;
+//setCookie("quarky",7,1);
+
+
+
+
+
+</script>
+
+
+
+
+
+<div id="apple" style="width: 600px; height: 400px"></div>
+	<script>
+
+	var map = L.map('apple').setView([28, -82], 6);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+//			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			attribution: '' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i86knfo3'
+		}).addTo(map);
+
+
+
+
+
+
+
+//	var polies = loadPoly("Addiction Medicine");	
+	var polies = loadPoly(providerTypeOptions[selectBox.selectedIndex]);	
+
+	polies.addTo(map);	
+
+	function recolor(val){
+
+		jc = 0;
+		
+		polies.getLayers().forEach(
+			function(x){
+				x.setStyle({color:getColor(refData[val][jc].dist)});
+				jc +=1;
+				return x;
+				
+			}
+		);
+
+		setCookie("savedListPosition1",selectBox.selectedIndex,1);
+
+		return 1;
+	
+	
+	}
+
+
+	</script>
+
+<!--
+    <p><b>Item 1 content.</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt pellentesque lorem, id suscipit dolor rutrum id. Morbi facilisis porta volutpat. Fusce adipiscing, mauris quis congue tincidunt, sapien purus suscipit odio, quis dictum odio tortor in sem. Ut sit amet libero nec orci mattis fringilla.</p>
+    <p>Praesent eu ipsum in sapien tincidunt molestie sed ut magna. Nam accumsan dui at orci rhoncus pharetra tincidunt elit ullamcorper. Sed ac mauris ipsum. Nullam imperdiet sapien id purus pretium id aliquam mi ullamcorper.</p>
+  </dd>
+-->
+  <dt class="accordion__title">Personal Void</dt>
+  <dd class="accordion__content">
+
+<table>
+  <tr>
+    <td style="width: 300px">
+
+		<form action="#" id="rawr2">
+		<select name="aa2" id="d1" style="width: 150px"> 
+    		<option value="">Please select</option>
+				</select>
+			<input type="number" name="v1" style="width: 100px"><br>
+
+			<select name="aa2" id="d2" style="width: 150px"> 
+    			<option value="">Please select</option>
+			</select>
+			<input type="number" name="v2" style="width: 100px"><br>
+			<br><input type="submit" value="Submit">
+		</form>
+    </td>
+    <td style="width: 750px"> 
+
+<div id="map2" style="width: 600px; height: 400px"></div>
+	<script>
+
+	var map = L.map('map2').setView([28, -82], 6);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+//			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			attribution: '' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i86knfo3'
+		}).addTo(map);
+</script>
+
+<!--
+    <p><b>Item 2 content.</b> Ut laoreet augue et neque pretium non sagittis nibh pulvinar. Etiam ornare tincidunt orci quis ultrices. Pellentesque ac sapien ac purus gravida ullamcorper. Duis rhoncus sodales lacus, vitae adipiscing tellus pharetra sed. Praesent bibendum lacus quis metus condimentum ac accumsan orci vulputate. Aenean fringilla massa vitae metus facilisis congue. Morbi placerat eros ac sapien semper pulvinar. Vestibulum facilisis, ligula a molestie venenatis, metus justo ullamcorper ipsum, congue aliquet dolor tortor eu neque. Sed imperdiet, nibh ut vestibulum tempor, nibh dui volutpat lacus, vel gravida magna justo sit amet quam. Quisque tincidunt ligula at nisl imperdiet sagittis. Morbi rutrum tempor arcu, non ultrices sem semper a. Aliquam quis sem mi.</p>
+-->
+	</td>
+	<tr>
+</table>
+
+	<script>
+
+		var selectBoxes = document.getElementsByName('aa2');
+		
+		for (var jb = 0; jb < selectBoxes.length; jb++) {
+			var selectBox = selectBoxes[jb];
+			for(var i = 0, l = providerTypeOptions.length; i < l; i++){
+	  			var option = providerTypeOptions[i];
+	  			selectBox.options.add( new Option(option, option) );
+			}
+		}
+
+	
+
+
+
+	</script>
+
+
+
+  </dd>
+  <dt class="accordion__title">Item 3</dt>
+  <dd class="accordion__content">
+    <p><b>Item 3 content.</b> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus dui urna, mollis vel suscipit in, pharetra at ligula. Pellentesque a est vel est fermentum pellentesque sed sit amet dolor. Nunc in dapibus nibh. Aliquam erat volutpat. Phasellus vel dui sed nibh iaculis convallis id sit amet urna. Proin nec tellus quis justo consequat accumsan. Vivamus turpis enim, auctor eget placerat eget, aliquam ut sapien.</p>
+  </dd>
+</dl>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio cumque voluptate consequuntur ex suscipit quas rerum enim sunt ab voluptas laudantium sed voluptates iure magni accusamus ratione tempore consectetur inventore deleniti culpa tempora molestias laboriosam recusandae soluta accusantium voluptatibus est. Incidunt expedita praesentium tempore ullam iusto voluptate facere quod explicabo.</p>
+<p>Beatae voluptas ratione ut non quaerat eum tempora nemo rem voluptatibus assumenda alias sit odio velit mollitia numquam iure quisquam illum repellat ea deserunt. Quo aut porro cum enim officiis mollitia dolorem maiores veniam similique quam voluptate deserunt. Esse facere itaque unde quaerat expedita magni sunt odit sint atque necessitatibus.</p>
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>
