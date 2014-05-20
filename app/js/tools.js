@@ -32,7 +32,7 @@
 //
 	function loadPoly(sname) {
 	
-		var cities = L.layerGroup();
+		var cities = new L.layerGroup();
 		var indata = refData[sname]; 
 		for (var i = 0; i < indata.length; i++) {	
 			

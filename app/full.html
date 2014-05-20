@@ -23,8 +23,8 @@
 
 	<link rel="stylesheet" href="/dist/leaflet.css" /> 
 	<link rel="stylesheet" href="/dist/toggle.css" > 
+	<script type="text/javascript" src="/js/tools.js"></script>
 	<script type="text/javascript" src="/js/leaflet.js"></script>
-	<script type="text/javascript" src="/dist/tools.js"></script>
 	<script type="text/javascript" src="/include/palette.js"></script>
 	<script type="text/javascript" src="/dat/refData1.js"> </script>
 	<script type="text/javascript" src="/js/providerTypeOptions.js"> </script>
@@ -72,6 +72,20 @@ VOID CHOROPLETH
   </tr>
 </table>
 <script>
+/*
+	function readCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+*/
+
+
 
 	var selectBox = document.getElementById('applecommander');
 	var sidx = -1;
@@ -120,7 +134,9 @@ VOID CHOROPLETH
 	var polies = loadPoly(providerTypeOptions[selectBox.selectedIndex]);	
 
 	polies.addTo(map);	
-
+//
+// change all the colors
+//
 	function recolor(val){
 
 		jc = 0;
@@ -134,7 +150,9 @@ VOID CHOROPLETH
 			}
 		);
 
-		setCookie("savedListPosition1",selectBox.selectedIndex,1);
+//		selectBox = document.getElementById('applecommander');
+
+		setCookie("savedListPosition1",document.getElementById('applecommander').selectedIndex,1);
 
 		return 1;
 	
@@ -191,14 +209,52 @@ PERSONAL VOID
 <div id="map2" style="width: 600px; height: 400px"></div>
 	<script>
 
-	var map = L.map('map2').setView([28, -82], 6);
+	var map2 = L.map('map2').setView([28, -82], 6);
 		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 //			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 			attribution: '' +
 				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 			id: 'examples.map-i86knfo3'
-		}).addTo(map);
+		}).addTo(map2);
+
+
+	var lbase = loadPoly("General Practice"); 
+/*	
+	lbase.getLayers().forEach(
+			function(x){
+				x.setStyle({color:#8484A3});
+				
+			}
+		);
+*/
+	lbase.addTo(map2);
+
+	var dtups = [ 
+		{"name":"Clinical Laboratory","dist":20}
+		,{"name":"Endocrinology","dist":20}  ]
+
+
+	for (var i = 0,jl = lbase.getLayers().length ; i<jl; i++) {
+
+		lbase.getLayers()[i].setStyle({color:"#8484A3"});
+//		var isgood = true;
+		if ( refData["Clinical Laboratory"][i].dist < 20 
+				&& refData["Endocrinology"][i].dist < 20 ) {
+
+			lbase.getLayers()[i].setStyle({color:"#66FFFF"});
+			
+		}
+
+
+	}
+/*	for (var i = 0; i < lbase.getLayers().length; i++) {lbase.getLayers()[i].setStyle({color:"#8484A3"});}
+
+	lbase.getLayers().forEach(function(x){x.setStyle({color:"#66FFFF"}); return 1;})
+*/
+
+//	var pintersect = loadPoly(providerTypeOptions[0]);
+
 </script>
 
 <!--
@@ -219,9 +275,19 @@ PERSONAL VOID
 	  			selectBox.options.add( new Option(option, option) );
 			}
 		}
+/*
+	var pintersect = loadPoly(providerTypeOptions[selectBox.selectedIndex]);	
+		pintersect.getLayers().forEach(
+			function(x){
+				x.setStyle({color:#8484A3});
+				
+			}
+		);
 
-	
 
+
+	pintersect.addTo(map2);	
+*/
 
 
 	</script>
