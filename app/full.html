@@ -295,14 +295,93 @@ PERSONAL VOID
 
 
   </dd>
-  <dt class="accordion__title">Item 3</dt>
+
+
+
+  <dt class="accordion__title">Population Load</dt>
   <dd class="accordion__content">
-    <p><b>Item 3 content.</b> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus dui urna, mollis vel suscipit in, pharetra at ligula. Pellentesque a est vel est fermentum pellentesque sed sit amet dolor. Nunc in dapibus nibh. Aliquam erat volutpat. Phasellus vel dui sed nibh iaculis convallis id sit amet urna. Proin nec tellus quis justo consequat accumsan. Vivamus turpis enim, auctor eget placerat eget, aliquam ut sapien.</p>
+
+
+<div id="map3" style="width: 600px; height: 400px"></div>
+<script type="text/javascript" src="js/leaflet-heat.js"></script>
+
+	<script>
+
+	var map3 = L.map('map3').setView([28, -82], 6);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+//			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			attribution: '' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i86knfo3'
+		}).addTo(map3);
+
+	var addressPoints = [
+/*	[30.33, -81.65,1000],
+	[28.08, -80.6,1000],
+	[25.77, -80.2,1000],
+	[26.52, -80.08,1000],
+	[26.14, -81.79,1000]
+*/
+[30.33,-81.65,615082],
+[28.08,-80.60,1005614],
+[25.77,-80.20,519576],
+[26.52,-80.08,392145],
+[26.14,-81.79,496316]
+
+
+	];
+function getColorLoad(d) {
+	return d > 10000 ? '#800026' :
+	       d > 5000  ? '#BD0026' :
+	       d > 1000  ? '#E31A1C' :
+	       d > 800  ? '#FC4E2A' :
+	       d > 500   ? '#FD8D3C' :
+	       d > 100   ? '#FEB24C' :
+	       d > 50   ? '#FED976' :
+	                  '#FFEDA0';
+};
+
+
+	var circles = new L.layerGroup();
+
+	for (var j = 0; j < addressPoints.length; j++) {
+
+		var circle = L.circle(addressPoints[j], addressPoints[j][2]/10., {
+		
+	    	color: getColor(addressPoints[j][2]/10000.),
+			weight: 0,
+	    	fillColor: getColor(addressPoints[j][2]/50000.),
+	    	fillOpacity: 0.5
+		});
+	
+		circle.addTo(circles);
+
+	}
+
+	circles.addTo(map3);
+
+
+//	var heat = L.heatLayer(addressPoints);
+//	heat.addTo(map3);
+
+</script>
+
+
+
   </dd>
+
+
+
+
 </dl>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio cumque voluptate consequuntur ex suscipit quas rerum enim sunt ab voluptas laudantium sed voluptates iure magni accusamus ratione tempore consectetur inventore deleniti culpa tempora molestias laboriosam recusandae soluta accusantium voluptatibus est. Incidunt expedita praesentium tempore ullam iusto voluptate facere quod explicabo.</p>
 <p>Beatae voluptas ratione ut non quaerat eum tempora nemo rem voluptatibus assumenda alias sit odio velit mollitia numquam iure quisquam illum repellat ea deserunt. Quo aut porro cum enim officiis mollitia dolorem maiores veniam similique quam voluptate deserunt. Esse facere itaque unde quaerat expedita magni sunt odit sint atque necessitatibus.</p>
+
+
+
+
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
