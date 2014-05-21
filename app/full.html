@@ -52,6 +52,31 @@ VOID CHOROPLETH
   <dt class="accordion__title">Void Choropleth</dt>
   <dd class="accordion__content">
 
+<p id="demo">Click here to put a pin on the map:</p>
+<button onclick="getLocation()">Pin Location</button>
+<script>
+var x=document.getElementById("demo");
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+  }
+function showPosition(position)
+  {
+//  x.innerHTML="Latitude: " + position.coords.latitude + 
+//  "<br>Longitude: " + position.coords.longitude;	
+
+		L.marker([position.coords.latitude,position.coords.longitude]).addTo(map)
+			.bindPopup("<b>Current Location!</b><br />You are here.").openPopup();
+	
+
+  }
+</script>
+
+
 
 <!--				
 	<select name="aa" id="applecommander" > 
